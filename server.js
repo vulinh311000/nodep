@@ -4,10 +4,14 @@ var app = express();
 var hostname= "localhost";
 var port= 8080;
 
-app.get("/a",(req,res) => {
+app.get("/",(req,res) => {
     res.send("<h1>What's up !</h1>");
 });
 
+app.get("/contact",(req,res) => {
+    res.send("<p>Contact here</p>");
+});
+
 app.listen(port,hostname,() => {
-    console.log(`Hello Moi nguoi minh la ${hostname}:${port}`);
+    console.log(`Server is running at => ${hostname}:${port}`);
 });
