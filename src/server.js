@@ -1,6 +1,10 @@
 import express from "express";
 import ConnectDB from "./config/connectDB";
 import configViewEngine from './config/viewEngine';
+import initRoutes from './routes/web';
+
+const hostname = "localhost";
+const port = 8080;
 
 // Init app
 const app = express();
@@ -11,16 +15,8 @@ ConnectDB();
 // Config view engine
 configViewEngine(app);
 
-const hostname = "localhost";
-const port = 8080;
-
-app.get("/", (req, res) => {
-  return res.render("main/master");
-});
-
-app.get("/login-register", (req, res) => {
-  return res.render("auth/loginRegister");
-});
+// Init all routes
+initRoutes(app);
 
 app.listen(port, hostname, () => {
   console.log(`Server is running at => ${hostname}:${port}`);
