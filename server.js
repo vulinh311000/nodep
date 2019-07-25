@@ -15,6 +15,10 @@ app.get('/about',(req,res) => {
     res.send("<p>What about me ?</p>")
 });
 
+app.get('/login',(req,res) => {
+    res.send("<p>Login page</p>");
+})
+
 app.listen(port,hostname,() => {
     console.log(`Server is running at => ${hostname}:${port}`);
 });
