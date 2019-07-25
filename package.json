@@ -18,8 +18,9 @@
   },
   "homepage": "https://github.com/vulinh311000/nodep#readme",
   "dependencies": {
+    "bluebird": "3.5.3",
     "express": "^4.17.1",
-    "mongoose": "^5.6.6"
+    "mongoose": "4.13.9"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
