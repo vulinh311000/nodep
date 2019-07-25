@@ -1,0 +1,22 @@
+{
+  "name": "nodep",
+  "version": "1.0.0",
+  "description": "Chat",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vulinh311000/nodep.git"
+  },
+  "author": "Vu Linh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vulinh311000/nodep/issues"
+  },
+  "homepage": "https://github.com/vulinh311000/nodep#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
