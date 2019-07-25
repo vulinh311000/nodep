@@ -16,6 +16,10 @@ const initRoutes = app => {
 
   router.get("/logout", getLogout);
 
+  router.get("/test",(req,res) => {
+    res.send("<h1>Test</h1>");
+  });
+
   return app.use("/", router);
 };
 
