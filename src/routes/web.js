@@ -20,7 +20,7 @@ const initRoutes = app => {
     res.send("<h1>Test</h1>");
   });
 
-  return app.use("/", router);
+  app.use("/", router);
 };
 
-module.exports = initRoutes;
+export default initRoutes;
