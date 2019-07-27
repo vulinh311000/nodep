@@ -1,5 +1,12 @@
 import express from "express";
-import {getLoginRegister, getLogout, postRegister, getVerifyAccount} from "../controllers/authController";
+import {
+    getLoginRegister,
+    getLogout,
+    postRegister,
+    getVerifyAccount,
+    checkLoggedIn,
+    checkLoggedOut
+} from "../controllers/authController";
 import {getHome} from "../controllers/homeController";
 import {registerValidator} from '../validation/authValidation';
 import passport from 'passport';
@@ -16,16 +23,17 @@ const router = express.Router();
  */
 
 const initRoutes = app => {
-    router.get("/", getHome);
-    router.get("/login-register", getLoginRegister);
-    router.post("/register", registerValidator, postRegister);
-    router.get("/logout", getLogout);
-    router.get("/verify/:token",getVerifyAccount);
-    router.post("/login",passport.authenticate("local",{
+    router.get("/", checkLoggedIn, getHome);
+    router.get("/logout", checkLoggedIn, getLogout);
+
+    router.get("/login-register", checkLoggedOut, getLoginRegister);
+    router.post("/register", checkLoggedOut, registerValidator, postRegister);
+    router.get("/verify/:token", checkLoggedOut, getVerifyAccount);
+    router.post("/login", checkLoggedOut, passport.authenticate("local", {
         successRedirect: '/',
         failureRedirect: '/login-register',
-        successFlash:true,
-        failureFlash:true
+        successFlash: true,
+        failureFlash: true
     }));
     app.use("/", router);
 };
