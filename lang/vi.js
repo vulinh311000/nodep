@@ -16,7 +16,8 @@ export const transSuccess = {
     account_active: 'Kích hoạt tài khoản thành công',
     login_success: (username) => {
         return `Xin chào ${username} !`;
-    }
+    },
+    logout_success: 'Đăng xuất thành công !'
 }
 
 export const transMail = {
