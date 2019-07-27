@@ -7,11 +7,16 @@ export const transValidation = {
 };
 
 export const transErrors = {
-    account_in_use: "Email này đã được sử dụng."
+    account_in_use: "Email này đã được sử dụng.",
+    login_failed: "Sai tài khoản hoặc mật khẩu!",
+    account_not_active: "Tài khoản đã được đăng ký nhưng chưa active !"
 };
 
 export const transSuccess = {
-    account_active:'Kích hoạt tài khoản thành công'
+    account_active: 'Kích hoạt tài khoản thành công',
+    login_success: (username) => {
+        return `Xin chào ${username} !`;
+    }
 }
 
 export const transMail = {
