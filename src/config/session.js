@@ -1,13 +1,11 @@
+import dotenv from 'dotenv';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
 
+dotenv.config();
 const MongoStore = connectMongo(session);
-const DB_CONNECTION = "mongodb";
-const DB_HOST = "localhost";
-const DB_PORT = "27017";
-const DB_NAME = "chat";
 
-const URI = `${DB_CONNECTION}://${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+const URI = `${process.env.DB_CONNECTION}://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 
 /**
  * This variable is where save session, in this case is mongodb

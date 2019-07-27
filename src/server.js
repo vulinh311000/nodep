@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import express from "express";
 import ConnectDB from "./config/connectDB";
 import configViewEngine from './config/viewEngine';
@@ -6,8 +7,7 @@ import bodyParser from 'body-parser';
 import connectFlash from 'connect-flash';
 import configSession from './config/session';
 
-const hostname = "localhost";
-const port = 8080;
+dotenv.config();
 
 // Init app
 const app = express();
@@ -30,6 +30,6 @@ app.use(connectFlash());
 // Init all routes
 initRoutes(app);
 
-app.listen(port, hostname, () => {
-    console.log(`Server is running at => ${hostname}:${port}`);
+app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
+    console.log(`Server is running at => ${process.env.APP_HOST}:${process.env.APP_PORT}`);
 });
