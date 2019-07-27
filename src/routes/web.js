@@ -47,7 +47,7 @@ const initRoutes = app => {
         failureRedirect: '/login-register'
     }));
     router.get('/auth/google', checkLoggedOut, passport.authenticate("google", {
-        scope: ["email"]
+        scope: ["email","profile"]
     }))
 
     router.get('/auth/google/callback', checkLoggedOut, passport.authenticate('google', {

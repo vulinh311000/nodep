@@ -17,14 +17,14 @@ const initPassportGoogle = () => {
         clientID,
         clientSecret,
         callbackURL,
-        passReqToCallback: true,
-        scope: ['https://www.googleapis.com/auth/userinfo.profile','email']
+        passReqToCallback: true
     }, async (req, accessToken, refreshToken, profile, done) => {
         try {
             const user = await UserModel.findByGoogleUid(profile.id);
             if (user) return done(null, user, req.flash("success", transSuccess.login_success(user.username)));
+            console.log(profile);
             const newUserItem = {
-                username: profile.email.split("@")[0],
+                username: profile.displayName,
                 gender: profile.gender,
                 local: {isActive: true},
                 google: {
