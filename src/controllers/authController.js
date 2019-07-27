@@ -1,5 +1,5 @@
 import {validationResult} from 'express-validator/check';
-import {register} from './../services/authService';
+import {register,verifyAccount} from './../services/authService';
 
 export const getLoginRegister = (req, res) => {
     return res.render("auth/master", {
@@ -24,10 +24,26 @@ export const postRegister = async (req, res) => {
         return res.redirect('/login-register');
     }
     try {
-        await register(req.body);
+        const obj = Object.assign({}, req.body, {
+            protocol: req.protocol,
+            host: req.get("host")
+        });
+
+        await register(obj);
         req.flash("success", ["Tạo tài khoản thành công !"]);
     } catch (errors) {
         req.flash("errors", errors);
     }
     return res.redirect('/login-register');
+};
+
+export const getVerifyAccount = async (req,res) => {
+    try {
+        const verifySuccess = await verifyAccount(req.params.token);
+        req.flash("success", verifySuccess);
+        return res.redirect('/login-register');
+    } catch (errors) {
+        req.flash("errors", errors);
+        return res.redirect('/login-register');
+    }
 };
