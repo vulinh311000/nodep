@@ -16,6 +16,7 @@ function updateUserInfo() {
             $(this).val(null);
             return false;
         }
+
         if(typeof (FileReader) != 'undefined') {
             const imagePreview = $("#image-edit-profile");
             imagePreview.empty();
@@ -54,10 +55,15 @@ $(document).ready(function() {
             processData:false,
             data:userAvatar,
             success: function(result) {
-
+                console.log(result);
+                $(".user-modal-alert-success span").text(result.message);
+                $(".user-modal-alert-success").css("display","block");
+                $("#navbar-avatar").attr("src",result.imgSrc);
             },
             error:function(error) {
                 console.log(error);
+                $(".user-modal-alert-error span").text(error.responseText);
+                $(".user-modal-alert-error").css("display","block");
             }
         });
     });
