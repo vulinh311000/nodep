@@ -6,18 +6,9 @@ import initRoutes from './routes/web';
 import bodyParser from 'body-parser';
 import connectFlash from 'connect-flash';
 import configSession from './config/session';
-import https from 'https';
-import fs from 'fs';
 import passport from 'passport';
 
 dotenv.config();
-
-// Options OpenSSL
-const options = {
-    key: fs.readFileSync('./key.pem', 'utf8'),
-    cert: fs.readFileSync('./cert.pem', 'utf8'),
-    passphrase: 'vlinh'
-};
 
 // Init app
 const app = express();
@@ -44,9 +35,7 @@ app.use(passport.session());
 // Init all routes
 initRoutes(app);
 
-const server = https.createServer(options, app);
-
-server.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
+app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
     console.log(`Server is running at => ${process.env.APP_HOST}:${process.env.APP_PORT}`);
 });
 

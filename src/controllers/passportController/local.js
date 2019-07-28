@@ -21,7 +21,7 @@ const initPassportLocal = () => {
             const checkPassword = await user.comparePassword(password);
             if (!checkPassword) return done(null, false, req.flash("errors", [transErrors.login_failed]));
             // Login success
-            return done(null, user, req.flash("success", transSuccess.login_success(email)));
+            return done(null, user, req.flash("success", transSuccess.login_success(user.username)));
         } catch (errors) {
             console.log(errors);
             return done(null, false, req.flash("errors", ["Server có vấn đề !"]));
