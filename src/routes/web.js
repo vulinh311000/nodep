@@ -8,6 +8,7 @@ import {
     checkLoggedOut
 } from "../controllers/authController";
 import {getHome} from "../controllers/homeController";
+import {updateAvatar} from "../controllers/userController";
 import {registerValidator} from '../validation/authValidation';
 import passport from 'passport';
 import initPassportLocal from '../controllers/passportController/local';
@@ -29,6 +30,7 @@ const router = express.Router();
 const initRoutes = app => {
     router.get("/", checkLoggedIn, getHome);
     router.get("/logout", checkLoggedIn, getLogout);
+    router.put('/user/update-avatar', checkLoggedIn, updateAvatar);
 
     router.get("/login-register", checkLoggedOut, getLoginRegister);
     router.post("/register", checkLoggedOut, registerValidator, postRegister);
@@ -47,7 +49,7 @@ const initRoutes = app => {
         failureRedirect: '/login-register'
     }));
     router.get('/auth/google', checkLoggedOut, passport.authenticate("google", {
-        scope: ["email","profile"]
+        scope: ["email", "profile"]
     }))
 
     router.get('/auth/google/callback', checkLoggedOut, passport.authenticate('google', {
