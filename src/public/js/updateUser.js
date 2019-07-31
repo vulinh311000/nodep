@@ -1,5 +1,6 @@
 let userAvatar = null;
 let userInfo = {};
+
 function updateUserInfo() {
     $("#input-change-avatar").on("change",function() {
         const fileData = $(this).prop("files")[0];
@@ -44,27 +45,57 @@ function updateUserInfo() {
     });
 }
 
+function callUpdateUserAvatar() {
+    $.ajax({
+        url:"/user/update-avatar",
+        type:"put",
+        cache:false,
+        contentType:false,
+        processData:false,
+        data:userAvatar,
+        success: function(result) {
+            console.log(result);
+            $(".user-modal-alert-success span").text(result.message);
+            $(".user-modal-alert-success").css("display","block");
+            $("#navbar-avatar").attr("src",result.imgSrc);
+        },
+        error:function(error) {
+            console.log(error);
+            $(".user-modal-alert-error span").text(error.responseText);
+            $(".user-modal-alert-error").css("display","block");
+        }
+    });
+}
+
+function callUpdateUserInfo() {
+    $.ajax({
+        url:"/user/update-info",
+        type:"put",
+        data:{
+            username: $("#input-change-username").val(),
+            gender:$("input[type='radio']:checked").val(),
+            address:$("#input-change-address").val(),
+            phone:$("#input-change-phone").val()
+        },
+        success: function(result) {
+            console.log(result);
+            $(".user-modal-alert-success span").text(result.message);
+            $(".user-modal-alert-success").css("display","block");
+        },
+        error:function(error) {
+            console.log(error);
+            $(".user-modal-alert-error span").text(error.responseText);
+            $(".user-modal-alert-error").css("display","block");
+        }
+    });
+}
+
 $(document).ready(function() {
     updateUserInfo();
     $("#input-btn-update-user").on("click",function() {
-        $.ajax({
-            url:"/user/update-avatar",
-            type:"put",
-            cache:false,
-            contentType:false,
-            processData:false,
-            data:userAvatar,
-            success: function(result) {
-                console.log(result);
-                $(".user-modal-alert-success span").text(result.message);
-                $(".user-modal-alert-success").css("display","block");
-                $("#navbar-avatar").attr("src",result.imgSrc);
-            },
-            error:function(error) {
-                console.log(error);
-                $(".user-modal-alert-error span").text(error.responseText);
-                $(".user-modal-alert-error").css("display","block");
-            }
-        });
+        if ($('#input-change-avatar').get(0).files.length !== 0) {
+            callUpdateUserAvatar();
+        }
+        callUpdateUserInfo();
     });
 });

@@ -51,3 +51,17 @@ export const updateAvatar = (req, res) => {
         }
     });
 };
+
+export const updateInfo = async (req,res) => {
+    try {
+        const updateUserItem = req.body;
+        // Update user
+        const userUpdate = await updateUser(req.user._id, updateUserItem);
+
+        return res.status(200).send({
+            message: "Thay doi thong tin tai khoan thanh cong !"
+        });
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+};
