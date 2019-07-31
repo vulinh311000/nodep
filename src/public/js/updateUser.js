@@ -2,104 +2,138 @@ let userAvatar = null;
 let userInfo = {};
 
 function updateUserInfo() {
-    $("#input-change-avatar").on("change",function() {
+    $("#input-change-avatar").on("change", function () {
         const fileData = $(this).prop("files")[0];
-        const math = ["image/png","image/jpg","image/jpeg"];
+        const math = ["image/png", "image/jpg", "image/jpeg"];
         const limit = 1048576; //  byte = 1MB
 
-        if($.inArray(fileData.type,math) === -1) {
-            alertify.notify("Kiểu file không hợp lệ, chỉ chấp nhận jpg,jpeg & png.",'error',5);
+        if ($.inArray(fileData.type, math) === -1) {
+            alertify.notify("Kiểu file không hợp lệ, chỉ chấp nhận jpg,jpeg & png.", 'error', 5);
             $(this).val(null);
             return false;
         }
-        if(fileData.size > limit) {
-            alertify.notify("Ảnh upload tối da cho phép là 1MB.",'error',5);
+        if (fileData.size > limit) {
+            alertify.notify("Ảnh upload tối da cho phép là 1MB.", 'error', 5);
             $(this).val(null);
             return false;
         }
 
-        if(typeof (FileReader) != 'undefined') {
+        if (typeof (FileReader) != 'undefined') {
             const imagePreview = $("#image-edit-profile");
             imagePreview.empty();
 
             const fileReader = new FileReader();
             fileReader.onload = function (element) {
-                $("<img>",{
-                    src:element.target.result,
-                    class:"avatar img-circle",
-                    id:"user-modal-avatar",
-                    alt:"avatar"
+                $("<img>", {
+                    src: element.target.result,
+                    class: "avatar img-circle",
+                    id: "user-modal-avatar",
+                    alt: "avatar"
                 }).appendTo(imagePreview);
             };
             imagePreview.show();
             fileReader.readAsDataURL(fileData);
             let formData = new FormData();
-            formData.append("avatar",fileData);
+            formData.append("avatar", fileData);
             userAvatar = formData;
         } else {
-            alertify.notify("Trình duyệt của bạn không hỗ trợ FileReader",'error',5);
+            alertify.notify("Trình duyệt của bạn không hỗ trợ FileReader", 'error', 5);
         }
     });
-    $("#input-change-username").on("change",function() {
+    $("#input-change-username").on("change", function () {
 
     });
 }
 
 function callUpdateUserAvatar() {
     $.ajax({
-        url:"/user/update-avatar",
-        type:"put",
-        cache:false,
-        contentType:false,
-        processData:false,
-        data:userAvatar,
-        success: function(result) {
+        url: "/user/update-avatar",
+        type: "put",
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: userAvatar,
+        success: function (result) {
             console.log(result);
             $(".user-modal-alert-success span").text(result.message);
-            $(".user-modal-alert-success").css("display","block");
-            $("#navbar-avatar").attr("src",result.imgSrc);
+            $(".user-modal-alert-success").css("display", "block");
+            $("#navbar-avatar").attr("src", result.imgSrc);
         },
-        error:function(error) {
+        error: function (error) {
             console.log(error);
             $(".user-modal-alert-error span").text(error.responseText);
-            $(".user-modal-alert-error").css("display","block");
+            $(".user-modal-alert-error").css("display", "block");
         }
     });
 }
 
 function callUpdateUserInfo() {
     $.ajax({
-        url:"/user/update-info",
-        type:"put",
-        data:{
+        url: "/user/update-info",
+        type: "put",
+        data: {
             username: $("#input-change-username").val(),
-            gender:$("input[type='radio']:checked").val(),
-            address:$("#input-change-address").val(),
-            phone:$("#input-change-phone").val()
+            gender: $("input[type='radio']:checked").val(),
+            address: $("#input-change-address").val(),
+            phone: $("#input-change-phone").val()
         },
-        success: function(result) {
+        success: function (result) {
             console.log(result);
             $(".user-modal-alert-success span").text(result.message);
-            $(".user-modal-alert-success").css("display","block");
+            $(".user-modal-alert-success").css("display", "block");
         },
-        error:function(error) {
+        error: function (error) {
             console.log(error);
             $(".user-modal-alert-error span").text(error.responseText);
-            $(".user-modal-alert-error").css("display","block");
+            $(".user-modal-alert-error").css("display", "block");
         }
     });
 }
 
-$(document).ready(function() {
+function updatePassword(currentPassword, newPassword) {
+    $.ajax({
+        url: "/user/update-password",
+        type: "put",
+        data: {
+            currentPassword,
+            newPassword
+        },
+        success: function (result) {
+            console.log(result);
+            $(".user-modal-password-alert-success span").text(result.message);
+            $(".user-modal-password-alert-success").css("display", "block");
+        },
+        error: function (error) {
+            console.log(error);
+            $(".user-modal-password-alert-error span").text(error.responseText);
+            $(".user-modal-password-alert-error").css("display", "block");
+        }
+    });
+}
+
+$(document).ready(function () {
     updateUserInfo();
-    $("#input-btn-update-user").on("click",function() {
+    $("#input-btn-update-user").on("click", function () {
         if ($('#input-change-avatar').get(0).files.length !== 0) {
             callUpdateUserAvatar();
         }
         callUpdateUserInfo();
     });
 
-    $("#input-btn-update-user-password").on("click",function() {
-        alert(123);
+    $("#input-btn-update-user-password").on("click", function () {
+        const currentPass = $("#input-change-current-password").val();
+        const newPass = $("#input-change-new-password").val();
+        const newConfirmPass = $("#input-change-confirm-password").val();
+
+        console.log(currentPass || newPass || newConfirmPass);
+        if (!currentPass || !newPass || !newConfirmPass) {
+            alertify.error("Nhập cho đầy đủ vào !");
+        } else {
+            if(newPass === newConfirmPass) {
+                updatePassword(currentPass, newPass);
+            }else{
+                alertify.error("Ngu vua");
+            }
+        }
     });
 });
