@@ -120,6 +120,51 @@ $(document).ready(function () {
         callUpdateUserInfo();
     });
 
+    $("#searchBtn").click(function () {
+        let search = $("#searchInput").val();
+
+        if (search) {
+            $.ajax({
+                url: "/user/search",
+                type: "post",
+                data: {
+                    search
+                },
+                success: function (result) {
+                    $("#contactListSearch").empty();
+                    result.forEach(user => {
+                        $("#contactListSearch").append(`
+                        <li class="_contactList" data-uid="${user._id}">
+                        <div class="contactPanel">
+                        <div class="user-avatar">
+                        <img src="images/users/${user.avatar}" alt="">
+                        </div>
+                        <div class="user-name">
+                        <p>${user.username}</p>
+                        </div>
+                        <br>
+                        <div class="user-address">
+                        <span>&nbsp ${(user.address == null) ? '<span style="color:gray">Không có địa chỉ</span>' : user.address}</span>
+                        </div>
+                        <div class="user-add-new-contact" data-uid="${user._id}">
+                        Thêm vào danh sách liên lạc
+                        </div>
+                        <div class="user-remove-request-contact action-danger" data-uid="${user._id}">
+                        Hủy yêu cầu
+                        </div>
+                        </div>
+                        </li>`);
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        } else {
+            alertify.error("chua nhap gi` kia`");
+        }
+    });
+
     $("#input-btn-update-user-password").on("click", function () {
         const currentPass = $("#input-change-current-password").val();
         const newPass = $("#input-change-new-password").val();
@@ -129,9 +174,9 @@ $(document).ready(function () {
         if (!currentPass || !newPass || !newConfirmPass) {
             alertify.error("Nhập cho đầy đủ vào !");
         } else {
-            if(newPass === newConfirmPass) {
+            if (newPass === newConfirmPass) {
                 updatePassword(currentPass, newPass);
-            }else{
+            } else {
                 alertify.error("Ngu vua");
             }
         }

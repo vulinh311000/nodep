@@ -8,7 +8,7 @@ import {
     checkLoggedOut
 } from "../controllers/authController";
 import {getHome} from "../controllers/homeController";
-import {updateAvatar, updateInfo, updatePassword} from "../controllers/userController";
+import {updateAvatar, updateInfo, updatePassword, postSearchUser} from "../controllers/userController";
 import {registerValidator} from '../validation/authValidation';
 import passport from 'passport';
 import initPassportLocal from '../controllers/passportController/local';
@@ -33,6 +33,7 @@ const initRoutes = app => {
     router.put('/user/update-avatar', checkLoggedIn, updateAvatar);
     router.put('/user/update-info', checkLoggedIn, updateInfo);
     router.put('/user/update-password', checkLoggedIn, updatePassword);
+    router.post('/user/search', checkLoggedIn, postSearchUser);
 
     router.get("/login-register", checkLoggedOut, getLoginRegister);
     router.post("/register", checkLoggedOut, registerValidator, postRegister);

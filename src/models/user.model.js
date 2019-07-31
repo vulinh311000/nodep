@@ -31,6 +31,13 @@ const UserSchema = new Schema({
     deletedAt: {type: Number, default: null},
 });
 
+UserSchema.index({
+    username: 'text',
+    'local.email': 'text',
+    'facebook.email': 'text',
+    'google.email': 'text'
+});
+
 UserSchema.statics = {
     createNew(item) {
         return this.create(item);
@@ -56,14 +63,17 @@ UserSchema.statics = {
     findByGoogleUid(uid) {
         return this.findOne({"google.uid": uid}).exec();
     },
-    updateUser(id,item) {
-        return this.findByIdAndUpdate(id,item).exec();
+    updateUser(id, item) {
+        return this.findByIdAndUpdate(id, item).exec();
+    },
+    searchUser(key) {
+        return this.find({$text: {$search: key}}).select('_id username address avatar').exec();
     }
 };
 
 UserSchema.methods = {
     comparePassword(password) {
-        return bcrypt.compare(password,this.local.password);
+        return bcrypt.compare(password, this.local.password);
     }
 };
 
