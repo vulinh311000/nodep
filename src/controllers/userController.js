@@ -1,7 +1,7 @@
 import multer from 'multer';
 import {app} from '../config/app';
 import uuid from 'uuid/v4';
-import {updateUser} from './../services/userService';
+import {updateUser, searchUser} from './../services/userService';
 import fsExtra from 'fs-extra';
 import UserModel from '../models/user.model';
 import bcrypt from 'bcrypt';
@@ -86,4 +86,9 @@ export const updatePassword = async (req, res) => {
     } catch (error) {
         return res.status(500).send(error);
     }
+};
+
+export const postSearchUser = async (req, res) => {
+    const userSearch = await searchUser(req.body.search);
+    return res.status(200).send(userSearch);
 };
