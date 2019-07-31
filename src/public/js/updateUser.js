@@ -98,4 +98,8 @@ $(document).ready(function() {
         }
         callUpdateUserInfo();
     });
+
+    $("#input-btn-update-user-password").on("click",function() {
+        alert(123);
+    });
 });
