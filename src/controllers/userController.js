@@ -89,6 +89,6 @@ export const updatePassword = async (req, res) => {
 };
 
 export const postSearchUser = async (req, res) => {
-    const userSearch = await searchUser(req.body.search);
+    const userSearch = await searchUser(req.user._id,req.body.search);
     return res.status(200).send(userSearch);
 };

@@ -111,29 +111,20 @@ function updatePassword(currentPassword, newPassword) {
     });
 }
 
-$(document).ready(function () {
-    updateUserInfo();
-    $("#input-btn-update-user").on("click", function () {
-        if ($('#input-change-avatar').get(0).files.length !== 0) {
-            callUpdateUserAvatar();
-        }
-        callUpdateUserInfo();
-    });
+function searchUser() {
+    let search = $("#searchInput").val();
 
-    $("#searchBtn").click(function () {
-        let search = $("#searchInput").val();
-
-        if (search) {
-            $.ajax({
-                url: "/user/search",
-                type: "post",
-                data: {
-                    search
-                },
-                success: function (result) {
-                    $("#contactListSearch").empty();
-                    result.forEach(user => {
-                        $("#contactListSearch").append(`
+    if (search) {
+        $.ajax({
+            url: "/user/search",
+            type: "post",
+            data: {
+                search
+            },
+            success: function (result) {
+                $("#contactListSearch").empty();
+                result.forEach(user => {
+                    $("#contactListSearch").append(`
                         <li class="_contactList" data-uid="${user._id}">
                         <div class="contactPanel">
                         <div class="user-avatar">
@@ -154,15 +145,34 @@ $(document).ready(function () {
                         </div>
                         </div>
                         </li>`);
-                    });
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        } else {
-            alertify.error("chua nhap gi` kia`");
+                });
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    } else {
+        alertify.error("chua nhap gi` kia`");
+    }
+}
+
+$(document).ready(function () {
+    updateUserInfo();
+    $("#input-btn-update-user").on("click", function () {
+        if ($('#input-change-avatar').get(0).files.length !== 0) {
+            callUpdateUserAvatar();
         }
+        callUpdateUserInfo();
+    });
+
+    $("#searchInput").keypress(function (e) {
+        if (e.which == '13') {
+            searchUser();
+        }
+    });
+
+    $("#searchBtn").click(function () {
+        searchUser();
     });
 
     $("#input-btn-update-user-password").on("click", function () {

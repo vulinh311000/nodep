@@ -14,6 +14,9 @@ const ContactSchema = new Schema({
 ContactSchema.statics = {
     createNew(item) {
         return this.create(item);
+    },
+    findAllByUser(userId) {
+        return this.find({userId}).exec();
     }
 };
 
