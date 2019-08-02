@@ -154,6 +154,8 @@ function searchUser() {
     } else {
         alertify.error("chua nhap gi` kia`");
     }
+
+    addContact();
 }
 
 $(document).ready(function () {
@@ -191,4 +193,6 @@ $(document).ready(function () {
             }
         }
     });
+
+    removeRequestContact();
 });

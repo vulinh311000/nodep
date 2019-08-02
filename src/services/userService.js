@@ -11,6 +11,7 @@ export const searchUser = async (currentUserId, keyword) => {
         let deprecatedUserIds = [currentUserId];
         const contactsByUser = await ContactModel.findAllByUser(currentUserId);
         contactsByUser.forEach(contact => {
+            deprecatedUserIds.push(contact.userId);
             deprecatedUserIds.push(contact.contactId);
         });
 
