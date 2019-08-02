@@ -16,7 +16,41 @@ ContactSchema.statics = {
         return this.create(item);
     },
     findAllByUser(userId) {
-        return this.find({userId}).exec();
+        return this.find({
+            $or: [
+                {
+                    userId,
+                    "contactId": userId
+                }
+            ]
+        }).exec();
+    },
+    /*
+    * Check exists
+    * @param {string} userId
+    * @param {string} contactId */
+    checkExists(userId, contactId) {
+        return this.findOne({
+            $or: [
+                {
+                    $and: [
+                        {userId},
+                        {contactId}
+                    ]
+                },
+                {
+                    $and: [
+                        {userId:contactId},
+                        {contactId:userId}
+                    ]
+                }
+            ]
+        }).exec();
+    },
+    removeRequestContact(userId,contactId) {
+        return this.deleteOne({
+            userId,contactId
+        }).exec();
     }
 };
 

@@ -9,6 +9,7 @@ import {
 } from "../controllers/authController";
 import {getHome} from "../controllers/homeController";
 import {updateAvatar, updateInfo, updatePassword, postSearchUser} from "../controllers/userController";
+import {postAddNew, deleteRequestContact} from "../controllers/contactController";
 import {registerValidator} from '../validation/authValidation';
 import passport from 'passport';
 import initPassportLocal from '../controllers/passportController/local';
@@ -34,6 +35,8 @@ const initRoutes = app => {
     router.put('/user/update-info', checkLoggedIn, updateInfo);
     router.put('/user/update-password', checkLoggedIn, updatePassword);
     router.post('/user/search', checkLoggedIn, postSearchUser);
+    router.post('/contact/add-new', checkLoggedIn, postAddNew);
+    router.delete('/contact/remove-request-contact', checkLoggedIn, deleteRequestContact);
 
     router.get("/login-register", checkLoggedOut, getLoginRegister);
     router.post("/register", checkLoggedOut, registerValidator, postRegister);
