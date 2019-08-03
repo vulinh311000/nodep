@@ -16,6 +16,7 @@ function addContact() {
                 $("#contactListSearch").find(`.user-add-new-contact[data-uid=${uid}]`).hide();
                 $("#contactListSearch").find(`.user-remove-request-contact[data-uid=${uid}]`).css('display', 'inline-block');
                 increaseNumberNotifContact("count-request-contact-sent");
+                socket.emit('add-new-contact',{contactId: uid});
             }
         });
     });
