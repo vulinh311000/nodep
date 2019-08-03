@@ -10,20 +10,20 @@ const URI = `${process.env.DB_CONNECTION}://${process.env.DB_HOST}:${process.env
 /**
  * This variable is where save session, in this case is mongodb
  * */
-const sessionStore = new MongoStore({
-    url:URI,
-    autoReconnect:true
+export const sessionStore = new MongoStore({
+    url: URI,
+    autoReconnect: true
     // autoRemove:"native"
 });
 
 const configSession = (app) => {
     app.use(session({
-        key:"express.sid",
-        secret:"mySecret",
-        store:sessionStore,
-        resave:true,
-        saveUninitialized:false,
-        cookie:{
+        key: process.env.CS_KEY,
+        secret: process.env.CS_SECRET,
+        store: sessionStore,
+        resave: true,
+        saveUninitialized: false,
+        cookie: {
             maxAge: 8640000
         }
     }));
