@@ -19,7 +19,17 @@ function removeRequestContact() {
                 $("#contactListSearch").find(`.user-add-new-contact[data-uid=${uid}]`).show();
                 $("#contactListSearch").find(`.user-remove-request-contact[data-uid=${uid}]`).hide();
                 decreaseNumberNotifContact("count-request-contact-sent");
+                socket.emit('remove-request-contact',{contactId:uid});
             }
         });
     });
 }
+
+socket.on('response-remove-request-contact', function (user) {
+    $(`.noti_content span[data-uid=${user.id}]`).remove();
+
+    decreaseNumberNotifContact('count-request-contact-received');
+
+    decrease('noti_counter');
+    decrease('noti_contact_counter');
+});
