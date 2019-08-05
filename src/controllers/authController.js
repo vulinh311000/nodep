@@ -10,14 +10,14 @@ export const getLoginRegister = (req, res) => {
 };
 
 export const checkLoggedIn = (req, res, next) => {
-    if(!req.isAuthenticated()) {
+    if (!req.isAuthenticated()) {
         return res.redirect('/login-register');
     }
     next();
 };
 
-export const checkLoggedOut = (req,res,next) => {
-    if(req.isAuthenticated()) {
+export const checkLoggedOut = (req, res, next) => {
+    if (req.isAuthenticated()) {
         return res.redirect('/');
     }
     next();
