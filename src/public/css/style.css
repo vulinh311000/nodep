@@ -279,7 +279,7 @@ label:focus,
 }
 
 .noti_contact_counter {
-    display: none;
+    display: block;
     position: absolute;
     background: #E1141E;
     color: #FFF;
@@ -294,7 +294,7 @@ label:focus,
 }
 
 .noti_counter {
-    display: none;
+    display: block;
     position: absolute;
     background: #E1141E;
     color: #FFF;
@@ -1275,4 +1275,8 @@ label:focus,
 
 .user-modal-password-alert-error,.user-modal-password-alert-success{
     display: none;
+}
+
+.noti_readed_false {
+    background-color: #E3E8F0;
 }
