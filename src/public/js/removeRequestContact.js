@@ -26,7 +26,7 @@ function removeRequestContact() {
 }
 
 socket.on('response-remove-request-contact', function (user) {
-    $(`.noti_content span[data-uid=${user.id}]`).remove();
+    $(`.noti_content div[data-uid=${user.id}]`).remove();
 
     decreaseNumberNotifContact('count-request-contact-received');
 

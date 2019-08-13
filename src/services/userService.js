@@ -6,7 +6,7 @@ export const updateUser = (id, item) => {
     return UserModel.updateUser(id, item);
 };
 
-export const searchUser = async (currentUserId, keyword) => {
+export const searchUser = (currentUserId, keyword) => {
     return new Promise(async (resolve, reject) => {
         let deprecatedUserIds = [currentUserId];
         const contactsByUser = await ContactModel.findAllByUser(currentUserId);
