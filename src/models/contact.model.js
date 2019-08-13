@@ -20,6 +20,8 @@ ContactSchema.statics = {
             $or: [
                 {
                     userId,
+                },
+                {
                     "contactId": userId
                 }
             ]
@@ -40,16 +42,16 @@ ContactSchema.statics = {
                 },
                 {
                     $and: [
-                        {userId:contactId},
-                        {contactId:userId}
+                        {userId: contactId},
+                        {contactId: userId}
                     ]
                 }
             ]
         }).exec();
     },
-    removeRequestContact(userId,contactId) {
+    removeRequestContact(userId, contactId) {
         return this.deleteOne({
-            userId,contactId
+            userId, contactId
         }).exec();
     }
 };

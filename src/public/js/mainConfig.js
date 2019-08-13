@@ -79,7 +79,7 @@ function configNotification() {
     $('.noti_counter').fadeOut('slow');
     return false;
   });
-  $(document).click(function() {
+  $(document.body).not("#popup-mark-noti-as-read").click(function() {
     $('#notifications').fadeOut('fast', 'linear');
   });
 }

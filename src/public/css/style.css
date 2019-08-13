@@ -255,7 +255,7 @@ label:focus,
     z-index: 999;
 }
 
-#notifications h3 {
+#notifications #popup-mark-noti-as-read {
     display: block;
     color: #333;
     background: #FFF;
@@ -314,8 +314,7 @@ label:focus,
     overflow: auto;
 }
 
-.noti_content > span {
-    position: absolute;
+.noti_content > div {
     max-width: 95%;
     margin-top: 5px;
     margin-left: 7px;
@@ -402,6 +401,14 @@ label:focus,
     margin-right: 7px;
     border-radius: 50%;
     border: 1px solid #b2bec3;
+}
+
+#noti_Button:hover{
+    text-decoration: none;
+}
+
+#noti_Button a:hover{
+    text-decoration: underline;
 }
 
 .search_content ul li:hover {
